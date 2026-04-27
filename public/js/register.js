@@ -13,8 +13,24 @@ document.getElementById('registerForm').addEventListener('submit', async (e) => 
         return;
     }
 
+    if (name.length < 3) {
+        alert('Name must be at least 3 characters long');
+        return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        alert('Please enter a valid email address');
+        return;
+    }
+
     if (password !== confirmPassword) {
         alert('Passwords do not match');
+        return;
+    }
+
+    if (password.length < 8) {
+        alert('Password must be at least 8 characters long');
         return;
     }
 

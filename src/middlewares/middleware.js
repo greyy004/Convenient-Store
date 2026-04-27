@@ -14,7 +14,16 @@ export const validateRegister = async (req, res, next) => {
     const { name, email, password, confirmPassword } = req.body;
 
     if (!name || !email || !password || !confirmPassword) {
-        return res.status(400).json({ message: "All fields required" });
+        return res.status(400).json({ message: "All fields are required" });
+    }
+
+    if (name.trim().length < 3) {
+        return res.status(400).json({ message: "Name must be at least 3 characters long" });
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        return res.status(400).json({ message: "Please provide a valid email address" });
     }
 
     if (password !== confirmPassword) {
@@ -22,12 +31,12 @@ export const validateRegister = async (req, res, next) => {
     }
 
     if (password.length < 8) {
-        return res.status(400).json({ message: "Password too short" });
+        return res.status(400).json({ message: "Password must be at least 8 characters long" });
     }
 
     const existingUser = await getUserByEmail(email);
     if (existingUser) {
-        return res.status(409).json({ message: "Email already registered" });
+        return res.status(409).json({ message: "This email is already registered" });
     }
 
     next();
@@ -38,7 +47,12 @@ export const validateLogin = (req, res, next) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
-        return res.status(400).json({ message: "Email & password required" });
+        return res.status(400).json({ message: "Please provide both email and password" });
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        return res.status(400).json({ message: "Please provide a valid email address" });
     }
 
     next(); 

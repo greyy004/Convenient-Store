@@ -9,6 +9,12 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
         return;
     }
 
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        alert('Please enter a valid email address');
+        return;
+    }
+
     try {
         const response = await fetch('/auth/login', {
             method: 'POST',
