@@ -8,7 +8,8 @@ export const createProductTable = async () => {
                     id SERIAL PRIMARY KEY,
                     product_name VARCHAR(100),
                     description TEXT,
-                    price DECIMAL(10, 2)
+                    price DECIMAL(10, 2),
+                    stock INT
                 )
             `;
         await pool.query(query);
@@ -18,11 +19,12 @@ export const createProductTable = async () => {
 };
 
 
-export const addProductByAdmin = async (product_name, description, price) => {
+export const addProductByAdmin = async (product_name, description, price, stock) => {
     const result = await pool.query(
-        `INSERT INTO products(product_name, description, price) VALUES ($1,$2,$3)`,
-        [product_name, description, price]
+        `INSERT INTO products(product_name, description, price, stock) VALUES ($1,$2,$3,$4)`,
+        [product_name, description, price, stock]
     );
+    return result;
 };
 
 export const ProductCount = async () => {
