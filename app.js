@@ -24,7 +24,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-
 app.get('/',(req,res)=>{
     res.sendFile(path.join(__dirname,'public','html','index.html'));
 });
@@ -32,7 +31,7 @@ app.get('/',(req,res)=>{
 app.use('/auth', authRoutes);
 app.use('/admin', requireAuth, requireAdmin, adminRoutes);
 app.use('/user', requireAuth, userRoutes);
-app.use('/product', requireAuth, requireAdmin, productRoutes);
+app.use('/products', requireAuth, requireAdmin, productRoutes);
 const startServer = async () => {
     try {
         // Initialize the database
