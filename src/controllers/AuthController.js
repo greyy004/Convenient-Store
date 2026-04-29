@@ -28,7 +28,6 @@ export const login = async (req, res) => {
         id: user.id,
         is_admin: user.is_admin
     });
-    console.log(token);
     res.cookie('jwt', token, {
         httpOnly: true,
         maxAge: maxAge * 1000

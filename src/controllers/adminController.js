@@ -1,10 +1,12 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
 import {
-    UserCount
+    UserCount,
+    getAllUsers
 } from '../models/userModel.js';
 import {
-    ProductCount
+    ProductCount,
+    getAllProducts
 } from '../models/productModel.js';
 
 
@@ -17,10 +19,22 @@ export const getAdminDash = (req, res) => {
     );
 };
 
+export const getUsersPage = (req, res) => {
+    res.sendFile(
+        path.join(__dirname, '../../public/html/adminUsers.html')
+    );
+};
+
+export const getProductsPage = (req, res) => {
+    res.sendFile(
+        path.join(__dirname, '../../public/html/adminProducts.html')
+    );
+};
+
 export const getUserCount = async (req, res) => {
     try {
         const totalUsers = await UserCount();
-        if (!totalUsers) {
+        if (totalUsers === undefined || totalUsers === null) {
             return res.status(400).json({ message: "total users not found" });
         }
         return res.status(200).json({totalUsers: totalUsers});
@@ -34,10 +48,28 @@ export const getUserCount = async (req, res) => {
 export const getProductCount = async (req, res) => {
      try {
         const totalProducts = await ProductCount();
-        if (!totalProducts) {
+        if (totalProducts === undefined || totalProducts === null) {
             return res.status(400).json({ message: "total products not found" });
         }
         return res.status(200).json({totalProducts: totalProducts});
     } catch (err){
     return res.status(400).json({ message: "error in the database" });}
+};
+
+export const getUsers = async (req, res) => {
+    try {
+        const users = await getAllUsers();
+        return res.status(200).json({ users });
+    } catch (err) {
+        return res.status(500).json({ message: "error fetching users" });
+    }
+};
+
+export const getProducts = async (req, res) => {
+    try {
+        const products = await getAllProducts();
+        return res.status(200).json({ products });
+    } catch (err) {
+        return res.status(500).json({ message: "error fetching products" });
+    }
 };

@@ -41,4 +41,14 @@ export const UserCount = async () => {
         SELECT COUNT(*) FROM users where is_admin=false`
     );
     return result.rows[0].count;
-}
+};
+
+export const getAllUsers = async () => {
+    const result = await pool.query(`
+        SELECT id, name, email
+        FROM users
+        WHERE is_admin = false
+        ORDER BY id DESC
+    `);
+    return result.rows;
+};

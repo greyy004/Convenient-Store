@@ -20,23 +20,20 @@ export const createProductTable = async () => {
 };
 
 
-export const addProductByAdmin = async (product_name, description, price, stock) => {
+export const addProductByAdmin = async (product_name, description, price, stock, product_img_url = null) => {
   try {
-    console.log({ product_name, description, price, stock });
     const result = await pool.query(
-      `INSERT INTO products (product_name, description, price, stock)
-       VALUES ($1, $2, $3, $4)
+      `INSERT INTO products (product_name, description, price, stock, product_img_url)
+       VALUES ($1, $2, $3, $4, $5)
        RETURNING *`,
-      [product_name, description, price, stock]
+      [product_name, description, price, stock, product_img_url]
     );
 
     return result.rows[0];
 
   } catch (error) {
     console.error(error);
-    return res.status(500).json({
-      message: 'Failed to add product'
-    });
+    throw error;
   }
 };
 
@@ -45,4 +42,13 @@ export const ProductCount = async () => {
         SELECT COUNT(*) FROM products`
     );
     return result.rows[0].count;
-}
+};
+
+export const getAllProducts = async () => {
+    const result = await pool.query(`
+        SELECT id, product_name, description, price, stock, product_img_url
+        FROM products
+        ORDER BY id DESC
+    `);
+    return result.rows;
+};

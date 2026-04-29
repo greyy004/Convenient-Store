@@ -73,6 +73,83 @@ body {
     font-family: "Oswald", sans-serif;
 }
 
+.btn-card-action {
+    margin-top: 1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    color: var(--primary);
+    border: 2px solid var(--primary);
+    padding: 0.75rem 1.1rem;
+    border-radius: 999px;
+    font-family: "Oswald", sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    text-decoration: none;
+}
+
+.btn-card-action:hover {
+    background: var(--primary);
+    color: var(--light);
+}
+
+.list-page-section {
+    padding: 5rem 7%;
+}
+
+.list-page-shell {
+    max-width: 1100px;
+    margin: 0 auto;
+    background: var(--light);
+    border-radius: 16px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+    overflow: hidden;
+}
+
+.list-page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.5rem;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.list-page-header h2 {
+    margin: 0;
+    font-family: "Oswald", sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.list-page-content {
+    padding: 1.5rem;
+    overflow-x: auto;
+}
+
+.btn-back {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1rem;
+    border-radius: 999px;
+    border: 2px solid var(--primary);
+    color: var(--primary);
+    text-decoration: none;
+    font-family: "Oswald", sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    transition: all 0.25s ease;
+}
+
+.btn-back:hover {
+    background: var(--primary);
+    color: var(--light);
+}
+
 /* Form Styles */
 .form-container {
     max-width: 600px;
@@ -119,6 +196,109 @@ body {
     resize: vertical;
 }
 
+.upload-area {
+    min-height: 240px;
+    border: 2px dashed rgba(196, 69, 54, 0.35);
+    border-radius: 14px;
+    background: linear-gradient(180deg, #fffaf8 0%, #fff 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    cursor: pointer;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+    overflow: hidden;
+}
+
+.upload-area:hover,
+.upload-area.is-dragover {
+    border-color: var(--primary);
+    box-shadow: 0 12px 30px rgba(196, 69, 54, 0.14);
+    transform: translateY(-2px);
+}
+
+.upload-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.65rem;
+    text-align: center;
+    color: #6b7280;
+}
+
+.upload-placeholder p {
+    margin: 0;
+    font-size: 1rem;
+    color: var(--text);
+    font-weight: 700;
+}
+
+.upload-placeholder small {
+    font-size: 0.82rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.upload-icon {
+    width: 4.5rem;
+    height: 4.5rem;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(196, 69, 54, 0.1);
+    color: var(--primary);
+    font-family: "Oswald", sans-serif;
+    font-size: 1.05rem;
+    letter-spacing: 0.12em;
+    border: 1px solid rgba(196, 69, 54, 0.18);
+}
+
+.image-preview {
+    width: 100%;
+}
+
+.image-preview img {
+    width: 100%;
+    max-height: 280px;
+    object-fit: cover;
+    display: block;
+    border-radius: 10px;
+    box-shadow: 0 16px 32px rgba(0,0,0,0.12);
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.admin-table th,
+.admin-table td {
+    padding: 0.9rem 0.85rem;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+    vertical-align: top;
+}
+
+.admin-table th {
+    background: #fff5f2;
+    color: var(--text);
+    font-family: "Oswald", sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.admin-table td {
+    color: #4b5563;
+}
+
+.admin-empty {
+    text-align: center;
+    color: #6b7280;
+    padding: 2rem 1rem;
+}
+
 .btn-submit {
     width: 100%;
     background: var(--primary);
@@ -146,5 +326,23 @@ body {
     }
     .form-container {
         padding: 2rem;
+    }
+
+    .upload-area {
+        min-height: 200px;
+        padding: 1rem;
+    }
+
+    .list-page-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .list-page-content {
+        padding: 1rem;
+    }
+
+    .admin-table {
+        font-size: 0.92rem;
     }
 }

@@ -1,3 +1,5 @@
+let selectedProductImage = '';
+
 document.addEventListener("DOMContentLoaded", async()=>{
     const total_users=document.getElementById("totalUsers");
 try {
@@ -10,12 +12,12 @@ try {
     const data = await res.json();
     if(!res.ok)
     {
-        throw new error(data.message|| 'failed to fetch total user count');
+        throw new Error(data.message|| 'failed to fetch total user count');
     }
     total_users.innerHTML=data.totalUsers;
 }catch(err)
 {
-    alert("error:", err);
+    alert(err.message || 'Failed to fetch total user count');
 }
 });
 
@@ -32,12 +34,12 @@ try {
     const data = await res.json();
     if(!res.ok)
     {
-        throw new error(data.message|| 'failed to fetch total user count');
+        throw new Error(data.message|| 'failed to fetch total product count');
     }
     totalProducts.innerHTML=data.totalProducts;
 }catch(err)
 {
-    alert("error:", err);
+    alert(err.message || 'Failed to fetch total product count');
 }
 });
 
@@ -48,39 +50,44 @@ function setupIconPreview() {
     const previewImg = previewDiv.querySelector('img');
     const placeholder = uploadArea.querySelector('.upload-placeholder');
 
+    const showPreview = (file) => {
+        if (!file || !file.type.startsWith('image/')) {
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            previewImg.src = event.target.result;
+            selectedProductImage = event.target.result;
+            previewDiv.style.display = 'block';
+            placeholder.style.display = 'none';
+        };
+        reader.readAsDataURL(file);
+    };
+
     uploadArea.addEventListener('click', () => fileInput.click());
 
     fileInput.addEventListener('change', (e) => {
         const file = e.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = (event) => {
-                previewImg.src = event.target.result;
-                previewDiv.style.display = 'block';
-                placeholder.style.display = 'none';
-            };
-            reader.readAsDataURL(file);
-        }
+        showPreview(file);
     });
 
-    // Drag and drop
     uploadArea.addEventListener('dragover', (e) => {
         e.preventDefault();
-        uploadArea.style.borderColor = 'var(--primary)';
+        uploadArea.classList.add('is-dragover');
     });
 
     uploadArea.addEventListener('dragleave', () => {
-        uploadArea.style.borderColor = 'var(--border-light)';
+        uploadArea.classList.remove('is-dragover');
     });
 
     uploadArea.addEventListener('drop', (e) => {
         e.preventDefault();
-        uploadArea.style.borderColor = 'var(--border-light)';
+        uploadArea.classList.remove('is-dragover');
         const file = e.dataTransfer.files[0];
         if (file && file.type.startsWith('image/')) {
             fileInput.files = e.dataTransfer.files;
-            const event = new Event('change');
-            fileInput.dispatchEvent(event);
+            showPreview(file);
         }
     });
 }
@@ -93,12 +100,22 @@ document.addEventListener("DOMContentLoaded", () => {
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            const formData = new FormData(form);
+            const payload = {
+                product_name: form.product_name.value.trim(),
+                description: form.description.value.trim(),
+                price: form.price.value,
+                stock: form.stock.value,
+                product_img_url: selectedProductImage
+            };
 
             try {
                 const res = await fetch('/products/addProduct', {
                     method: 'POST',
-                    body: formData
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify(payload)
                 });
 
                 const result = await res.json();
@@ -108,9 +125,22 @@ document.addEventListener("DOMContentLoaded", () => {
                 alert(result.message);
 
                 form.reset();
+                selectedProductImage = '';
+                const previewDiv = document.getElementById('imagePreview');
+                const previewImg = previewDiv?.querySelector('img');
+                const placeholder = document.querySelector('#uploadArea .upload-placeholder');
+                if (previewImg) {
+                    previewImg.src = '';
+                }
+                if (previewDiv) {
+                    previewDiv.style.display = 'none';
+                }
+                if (placeholder) {
+                    placeholder.style.display = 'flex';
+                }
             } catch (err) {
                 console.error(err);
-                alert('Error adding product');
+                alert(err.message || 'Error adding product');
             }
         });
     }

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Users - JayaStore</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Lato:wght@300;400;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="../css/index.css">
+  <link rel="stylesheet" href="../css/adminDashboard.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="logo">JAYA<span>ADMIN</span></div>
+      <ul class="nav-menu">
+        <li><a href="/admin/dashboard">Dashboard</a></li>
+        <li><a href="/admin/users-page">Users</a></li>
+        <li><a href="/admin/products-page">Products</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <section class="list-page-section">
+    <div class="list-page-shell">
+      <div class="list-page-header">
+        <div>
+          <h2>All Users</h2>
+          <p class="section-subtitle">Registered non-admin users</p>
+        </div>
+        <a href="/admin/dashboard" class="btn-back">Back to Dashboard</a>
+      </div>
+      <div class="list-page-content" id="listContent">
+        <p class="admin-empty">Loading users...</p>
+      </div>
+    </div>
+  </section>
+
+  <script src="../js/adminList.js"></script>
+</body>
+</html>
