@@ -5,7 +5,6 @@ import {addProduct} from '../controllers/productController.js';
 //Add Product
 router.post('/addProduct', addProduct);
 
-
 export default router;
 
 

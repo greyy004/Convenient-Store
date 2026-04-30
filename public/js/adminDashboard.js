@@ -147,10 +147,16 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 async function logout() {
-    if (await showConfirm('Are you sure you want to logout?')) {
+    if (confirm('Are you sure you want to logout?')) {
         try {
-            await fetch('/auth/authLogout');
-            window.location.href = '/html/index.html';
+            const res = await fetch('/auth/logout', {
+                method: 'POST'
+            });
+            if (res.ok) {
+                window.location.href = '/html/index.html';
+            } else {
+                console.error('Logout failed');
+            }
         } catch (err) {
             console.error('Logout failed:', err);
         }

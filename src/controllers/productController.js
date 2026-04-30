@@ -27,3 +27,4 @@ export const addProduct = async (req, res)=>{
         return res.status(400).json({ message: err.message || 'Failed to add product' });
     }
 };
+

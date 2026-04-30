@@ -52,3 +52,4 @@ export const getAllUsers = async () => {
     `);
     return result.rows;
 };
+

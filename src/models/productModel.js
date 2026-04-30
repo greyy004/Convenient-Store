@@ -47,7 +47,7 @@ export const ProductCount = async () => {
 export const getAllProducts = async () => {
     const result = await pool.query(`
         SELECT id, product_name, description, price, stock, product_img_url
-        FROM products
+        FROM products where stock > 0
         ORDER BY id DESC
     `);
     return result.rows;

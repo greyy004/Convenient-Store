@@ -43,8 +43,6 @@ export const getUserCount = async (req, res) => {
 };
 
 
-
-
 export const getProductCount = async (req, res) => {
      try {
         const totalProducts = await ProductCount();

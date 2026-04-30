@@ -1,11 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>User Dashboard - JayaStore</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/index.css">
 </head>
+
 <body>
-    userdashboard
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">JAYA<span>STORE</span></div>
+            <ul class="nav-menu">
+                <li><a href="#dashboard">Dashboard</a></li>
+                <li><a href="#" onclick="logout()">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="products" id="dashboard" style="min-height: calc(100vh - 160px); padding-top: 120px;">
+        <div class="container">
+            <h2 class="section-title">Available Products</h2>
+            <p class="section-subtitle">Discover our wide range of items</p>
+            
+            <div style="display: flex; justify-content: center; margin: 3rem 0;">
+                <div class="product-card" style="min-width: 300px; padding: 2rem; text-align: center;">
+                    <h3 style="color: #666; font-size: 1.2rem; margin-bottom: 0.5rem;">Total Items Available</h3>
+                    <p style="font-size: 4rem; font-family: 'Oswald', sans-serif; font-weight: 700; color: var(--primary-color); margin: 0;" id="total_products">0</p>
+                </div>
+            </div>
+            
+            <div id="product"></div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 JayaStore. All Rights Reserved.</p>
+    </footer>
+
+    <script src="/js/userDashboard.js"></script>
 </body>
+
 </html>
