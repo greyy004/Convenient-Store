@@ -7,15 +7,33 @@ export const createProductTable = async () => {
                 CREATE TABLE IF NOT EXISTS products (
                     id SERIAL PRIMARY KEY,
                     product_name VARCHAR(100),
+                    category_id INT,
                     description TEXT,
                     price DECIMAL(10, 2),
                     stock INT,
-                    product_img_url TEXT
+                    product_img_url TEXT,
+                    FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE SET NULL
                 )
             `;
         await pool.query(query);
     } catch (err) {
         console.error('Error creating product table:', err);
+    }
+};
+
+export const createCategoryTable = async () => {
+    try {
+        // Create Categories Table
+        const query = `
+                CREATE TABLE IF NOT EXISTS categories (
+                    id SERIAL PRIMARY KEY, 
+                    name VARCHAR(50)
+                )
+            `;
+        await pool.query(query);
+    }
+    catch (err) {
+        console.error('Error creating category table:', err);
     }
 };
 

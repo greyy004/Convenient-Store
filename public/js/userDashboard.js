@@ -1,21 +1,7 @@
 document.addEventListener("DOMContentLoaded", async () => {
-    const ProductCountByUser = document.getElementById('total_products');
     const productContainer = document.getElementById('product');
 
     try {
-        // Fetch product count
-        const countRes = await fetch('/user/productCount', {
-            method: 'get',
-            headers: { 'content-type': 'application/json' },
-            credentials: 'include'
-        });
-        if (countRes.ok) {
-            const countData = await countRes.json();
-            if (ProductCountByUser) {
-                ProductCountByUser.innerHTML = countData.productCount;
-            }
-        }
-
         // Fetch products
         if (productContainer) {
             const productsRes = await fetch('/user/products', {
@@ -45,7 +31,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     <div class="product-card">
                         <div class="product-icon" style="background-image: url('${imgUrl}');"></div>
                         <h3>${p.product_name}</h3>
-                        <p><strong>$${parseFloat(p.price).toFixed(2)}</strong> - In Stock: ${p.stock}</p>
+                        <p><strong>Rs. ${parseFloat(p.price).toFixed(2)}</strong> - In Stock: ${p.stock}</p>
                         <p>${p.description || 'No description available.'}</p>
                         <button>Add to Cart</button>
                     </div>
