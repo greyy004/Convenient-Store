@@ -5,13 +5,13 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
     const password = document.getElementById('password').value.trim();
 
     if (!email || !password) {
-        alert('Please fill in all fields');
+        showNotification('Please fill in all fields', 'warning');
         return;
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-        alert('Please enter a valid email address');
+        showNotification('Please enter a valid email address', 'warning');
         return;
     }
 
@@ -37,6 +37,6 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
         }
     } catch (err) {
         console.error(err);
-        alert(err.message);
+        showNotification(err.message, 'error');
     }
 });

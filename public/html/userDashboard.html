@@ -9,6 +9,8 @@
         href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Lato:wght@300;400;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/userDashboard.css">
+    <link rel="stylesheet" href="../css/notifications.css">
 </head>
 
 <body>
@@ -16,24 +18,49 @@
         <div class="nav-container">
             <div class="logo">JAYA<span>STORE</span></div>
             <ul class="nav-menu">
-                <li><a href="#dashboard">Dashboard</a></li>
+                <li><a href="#dashboard">Shop</a></li>
+                <li><a href="#products-area">Products</a></li>
                 <li><a href="#" onclick="logout()">Logout</a></li>
             </ul>
         </div>
     </nav>
 
-    <section class="products" id="dashboard" style="min-height: calc(100vh - 160px); padding-top: 120px;">
-        <div class="container">
-            <h2 class="section-title">Available Products</h2>
-            <p class="section-subtitle">Discover our wide range of items</p>
-            <div id="product"></div>
-        </div>
-    </section>
+    <main class="user-dashboard" id="dashboard">
+        <section class="shop-products" id="products-area">
+            <div class="container">
+                <div class="shop-section-header">
+                    <div>
+                        <p class="shop-eyebrow">Available Now</p>
+                        <h2>Products</h2>
+                    </div>
+                    <p id="productSummary">Loading products...</p>
+                </div>
+
+                <div class="shop-toolbar">
+                    <label class="shop-search">
+                        <span>Search</span>
+                        <input type="search" id="productSearch" placeholder="Search products">
+                    </label>
+                    <label class="shop-filter">
+                        <span>Category</span>
+                        <select id="categoryFilter">
+                            <option value="all">All categories</option>
+                        </select>
+                    </label>
+                </div>
+
+                <div id="product">
+                    <p class="shop-empty">Loading products...</p>
+                </div>
+            </div>
+        </section>
+    </main>
 
     <footer>
         <p>&copy; 2026 JayaStore. All Rights Reserved.</p>
     </footer>
 
+    <script src="/js/notifications.js"></script>
     <script src="/js/userDashboard.js"></script>
 </body>
 

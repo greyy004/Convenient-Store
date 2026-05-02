@@ -8,6 +8,7 @@ import {
     ProductCount,
     getAllProducts
 } from '../models/productModel.js';
+import pool from '../config/db.js';
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -69,5 +70,25 @@ export const getProducts = async (req, res) => {
         return res.status(200).json({ products });
     } catch (err) {
         return res.status(500).json({ message: "error fetching products" });
+    }
+};
+
+export const getSalesData = async (req, res) => {
+    try {
+        const result = await pool.query(`
+            SELECT p.product_name, COALESCE(SUM(oi.quantity), 0) AS total_quantity
+            FROM order_items oi
+            JOIN products p ON oi.product_id = p.id
+            GROUP BY p.id, p.product_name
+            ORDER BY total_quantity DESC
+            LIMIT 5
+        `);
+
+        return res.status(200).json({
+            labels: result.rows.map((row) => row.product_name),
+            values: result.rows.map((row) => Number(row.total_quantity))
+        });
+    } catch (err) {
+        return res.status(500).json({ message: "error fetching sales data" });
     }
 };

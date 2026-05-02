@@ -9,33 +9,33 @@ document.getElementById('registerForm').addEventListener('submit', async (e) => 
 
     // --- Validation ---
     if (!name || !email || !password || !confirmPassword) {
-        alert('Please fill in all fields');
+        showNotification('Please fill in all fields', 'warning');
         return;
     }
 
     if (name.length < 3) {
-        alert('Name must be at least 3 characters long');
+        showNotification('Name must be at least 3 characters long', 'warning');
         return;
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-        alert('Please enter a valid email address');
+        showNotification('Please enter a valid email address', 'warning');
         return;
     }
 
     if (password !== confirmPassword) {
-        alert('Passwords do not match');
+        showNotification('Passwords do not match', 'warning');
         return;
     }
 
     if (password.length < 8) {
-        alert('Password must be at least 8 characters long');
+        showNotification('Password must be at least 8 characters long', 'warning');
         return;
     }
 
     if (!terms) {
-        alert('You must agree to the Terms & Conditions');
+        showNotification('You must agree to the Terms & Conditions', 'warning');
         return;
     }
 
@@ -51,11 +51,11 @@ document.getElementById('registerForm').addEventListener('submit', async (e) => 
         if (!response.ok)
             throw new Error(data.message || 'Registration failed');
 
-        alert('Registration successful! Please log in.');
+        flashNotification('Registration successful! Please log in.', 'success');
         window.location.href = '/html/login.html';
 
     } catch (err) {
         console.error(err);
-        alert(err.message);
+        showNotification(err.message, 'error');
     }
 });

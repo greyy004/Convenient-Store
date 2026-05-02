@@ -1,4 +1,49 @@
 let selectedProductImage = '';
+let categories = [];
+
+function escapeHtml(value) {
+    return String(value ?? '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+}
+
+function renderCategoryOptions() {
+    const categorySelect = document.getElementById('categorySelect');
+    if (!categorySelect) {
+        return;
+    }
+
+    const options = categories.map((category) => (
+        `<option value="${escapeHtml(category.id)}">${escapeHtml(category.name)}</option>`
+    )).join('');
+
+    categorySelect.innerHTML = `<option value="">No category</option>${options}`;
+}
+
+async function loadCategories() {
+    try {
+        const res = await fetch('/products/categories', {
+            method: 'GET',
+            headers: {
+                'content-type': 'application/json'
+            },
+            credentials: 'include'
+        });
+
+        const data = await res.json();
+        if (!res.ok) {
+            throw new Error(data.message || 'Failed to load categories');
+        }
+
+        categories = data.categories || [];
+        renderCategoryOptions();
+    } catch (err) {
+        console.error('Error loading categories:', err);
+    }
+}
 
 document.addEventListener("DOMContentLoaded", async()=>{
     const ctx = document.getElementById('sales-id');
@@ -39,6 +84,21 @@ document.addEventListener("DOMContentLoaded", async()=>{
                     ],
                     borderWidth: 1
                 }]
+            },
+            options: {
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'right',
+                        labels: {
+                            boxWidth: 12,
+                            padding: 14,
+                            font: {
+                                family: 'Lato'
+                            }
+                        }
+                    }
+                }
             }
         });
     } catch (err) {
@@ -64,7 +124,7 @@ try {
     total_users.innerHTML=data.totalUsers;
 }catch(err)
 {
-    alert(err.message || 'Failed to fetch total user count');
+    showNotification(err.message || 'Failed to fetch total user count', 'error');
 }
 });
 
@@ -86,7 +146,7 @@ try {
     totalProducts.innerHTML=data.totalProducts;
 }catch(err)
 {
-    alert(err.message || 'Failed to fetch total product count');
+    showNotification(err.message || 'Failed to fetch total product count', 'error');
 }
 });
 
@@ -140,6 +200,43 @@ function setupIconPreview() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+    loadCategories();
+
+    const categoryForm = document.getElementById('categoryForm');
+    if (categoryForm) {
+        categoryForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const name = categoryForm.name.value.trim();
+            if (!name) {
+                return;
+            }
+
+            try {
+                const res = await fetch('/products/categories', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({ name })
+                });
+
+                const result = await res.json();
+                if (!res.ok) {
+                    throw new Error(result.message || 'Failed to save category');
+                }
+
+                showNotification(result.message, 'success');
+                categoryForm.reset();
+                await loadCategories();
+            } catch (err) {
+                console.error(err);
+                showNotification(err.message || 'Error saving category', 'error');
+            }
+        });
+    }
+
     const form = document.getElementById('productForm');
     
     if (form) {
@@ -149,6 +246,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const payload = {
                 product_name: form.product_name.value.trim(),
+                category_id: form.category_id.value || null,
                 description: form.description.value.trim(),
                 price: form.price.value,
                 stock: form.stock.value,
@@ -169,7 +267,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 if(!res.ok) {
                     throw new Error(result.message || 'Failed to add product');
                 }
-                alert(result.message);
+                showNotification(result.message, 'success');
 
                 form.reset();
                 selectedProductImage = '';
@@ -187,14 +285,21 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             } catch (err) {
                 console.error(err);
-                alert(err.message || 'Error adding product');
+                showNotification(err.message || 'Error adding product', 'error');
             }
         });
     }
 });
 
 async function logout() {
-    if (confirm('Are you sure you want to logout?')) {
+    const shouldLogout = await showConfirmation({
+        title: 'Logout',
+        message: 'Are you sure you want to logout?',
+        confirmText: 'Logout',
+        cancelText: 'Stay'
+    });
+
+    if (shouldLogout) {
         try {
             const res = await fetch('/auth/logout', {
                 method: 'POST'
@@ -203,9 +308,11 @@ async function logout() {
                 window.location.href = '/html/index.html';
             } else {
                 console.error('Logout failed');
+                showNotification('Logout failed', 'error');
             }
         } catch (err) {
             console.error('Logout failed:', err);
+            showNotification('Logout failed', 'error');
         }
     }
 }

@@ -10,6 +10,7 @@
     rel="stylesheet">
   <link rel="stylesheet" href="../css/index.css">
   <link rel="stylesheet" href="../css/adminDashboard.css">
+  <link rel="stylesheet" href="../css/notifications.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -18,7 +19,6 @@
     <div class="nav-container">
       <div class="logo">JAYA<span>ADMIN</span></div>
       <ul class="nav-menu">
-        <li><a href="/html/index.html">Home</a></li>
         <li><a href="#dashboard">Dashboard</a></li>
         <li><a href="#add-product">Add Product</a></li>
         <li><a href="#" id="logoutBtn" onclick="logout()">Logout</a></li>
@@ -27,46 +27,88 @@
   </nav>
 
   <section class="dashboard-section" id="dashboard">
-    <div class="container">
-      <h2 class="section-title">Dashboard Overview</h2>
-      <p class="section-subtitle">Store statistics at a glance</p>
-
-      <div class="stats-grid">
-        <div class="stat-card">
-          <div class="stat-icon"
-            style="background-image: url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=400&fit=crop');">
-          </div>
-          <h3>Total Users</h3>
-          <p class="stat-number" id="totalUsers">Loading...</p>
+    <div class="container admin-shell">
+      <div class="admin-page-header">
+        <div>
+          <p class="admin-eyebrow">Store Control</p>
+          <h1>Dashboard Overview</h1>
+          <p>Track store activity, review sales, and keep products organized.</p>
+        </div>
+        <div class="admin-actions">
           <a href="/admin/users-page" class="btn btn-card-action">View Users</a>
+          <a href="/admin/products-page" class="btn btn-card-action">View Products</a>
+          <a href="#add-product" class="btn btn-primary-action">Add Product</a>
+        </div>
+      </div>
+
+      <div class="dashboard-grid">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <span class="stat-label">Customers</span>
+            <p class="stat-number" id="totalUsers">Loading...</p>
+            <p class="stat-note">Registered shopper accounts</p>
+          </div>
+
+          <div class="stat-card">
+            <span class="stat-label">Inventory</span>
+            <p class="stat-number" id="totalProducts">Loading...</p>
+            <p class="stat-note">Products available in store</p>
+          </div>
         </div>
 
-        <div class="stat-card">
-          <div class="stat-icon"
-            style="background-image: url('https://images.unsplash.com/photo-1604719312566-8912e9227c6a?w=600&h=400&fit=crop');">
+        <div class="statistics-card">
+          <div class="panel-heading">
+            <div>
+              <span class="stat-label">Sales</span>
+              <h2>Top Products</h2>
+            </div>
+            <a href="/admin/products-page" class="panel-link">Inventory</a>
           </div>
-          <h3>Total Products</h3>
-          <p class="stat-number" id="totalProducts">Loading...</p>
-          <a href="/admin/products-page" class="btn btn-card-action">View Products</a>
+          <div class="chart-wrap">
+            <canvas id="sales-id"></canvas>
+          </div>
         </div>
       </div>
     </div>
   </section>
-  <section>
-    <div class="statistics-card">
-      <h1>Pie Chart</h1>
-      <p>Total Sales</p>
-      <canvas id="sales-id"></canvas>
-    </div>
-  </section>
   <section class="add-product-section" id="add-product">
-    <div class="container">
-      <h2 class="section-title">Add New Product</h2>
+    <div class="container admin-shell">
+      <div class="section-header-left">
+        <p class="admin-eyebrow">Catalog Tools</p>
+        <h2>Manage Products</h2>
+      </div>
+
+      <div class="management-grid">
       <div class="form-container">
+        <div class="form-heading">
+          <h3>Categories</h3>
+          <p>Create reusable groups for products.</p>
+        </div>
+        <form id="categoryForm">
+          <div class="form-group">
+            <label>Category Name</label>
+            <input type="text" name="name" placeholder="Enter category name" required>
+          </div>
+          <button type="submit" class="btn btn-submit">Save Category</button>
+        </form>
+      </div>
+
+      <div class="form-container form-container-wide">
+        <div class="form-heading">
+          <h3>Add New Product</h3>
+          <p>Add inventory details and publish it to the storefront.</p>
+        </div>
         <form id="productForm">
           <div class="form-group">
             <label>Product Name</label>
             <input type="text" name="product_name" placeholder="Enter product name" required>
+          </div>
+
+          <div class="form-group">
+            <label>Category</label>
+            <select name="category_id" id="categorySelect">
+              <option value="">No category</option>
+            </select>
           </div>
 
           <div class="form-group">
@@ -101,6 +143,7 @@
           <button type="submit" class="btn btn-submit">Add Product</button>
         </form>
       </div>
+      </div>
     </div>
   </section>
 
@@ -108,6 +151,7 @@
     <p>&copy; 2026 JayaStore Admin. All Rights Reserved.</p>
   </footer>
 
+  <script src="../js/notifications.js"></script>
   <script src="../js/adminDashboard.js"></script>
 </body>
 

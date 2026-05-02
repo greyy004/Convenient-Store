@@ -43,6 +43,7 @@ function renderProductsTable(products) {
         <tr>
             <td>${escapeHtml(product.id)}</td>
             <td>${escapeHtml(product.product_name)}</td>
+            <td>${escapeHtml(product.category_name || '-')}</td>
             <td>${escapeHtml(product.description || '-')}</td>
             <td>$${escapeHtml(product.price)}</td>
             <td>${escapeHtml(product.stock)}</td>
@@ -55,6 +56,7 @@ function renderProductsTable(products) {
                 <tr>
                     <th>ID</th>
                     <th>Product</th>
+                    <th>Category</th>
                     <th>Description</th>
                     <th>Price</th>
                     <th>Stock</th>

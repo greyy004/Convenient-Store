@@ -5,84 +5,155 @@ body {
 }
 
 .dashboard-section, .add-product-section {
-    padding: 5rem 7%;
+    padding: 3rem 7%;
 }
 
 .dashboard-section {
-    background: var(--light);
+    background: linear-gradient(180deg, #fff7f4 0%, var(--bg-gray) 100%);
 }
 
 .add-product-section {
     background: var(--bg-gray);
+    padding-top: 1rem;
 }
 
-.stats-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 3rem;
-    max-width: 900px;
-    margin: 0 auto;
+.admin-shell {
+    max-width: 1180px;
 }
 
-.stat-card {
-    background: var(--light);
-    padding: 3rem 2rem;
-    text-align: center;
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-    transition: all 0.3s ease;
-    border-bottom: 5px solid var(--primary);
-}
-
-.stat-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-}
-
-.stat-icon {
-    width: 100%;
-    height: 180px;
-    background-size: cover;
-    background-position: center;
+.admin-page-header,
+.section-header-left {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1.5rem;
     margin-bottom: 1.5rem;
-    border-radius: 8px;
-    position: relative;
 }
 
-.stat-icon::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.4), transparent);
-    border-radius: 8px;
-}
-
-.stat-card h3 {
+.admin-page-header h1,
+.section-header-left h2 {
+    margin: 0.25rem 0 0.4rem;
+    color: var(--dark);
     font-family: "Oswald", sans-serif;
-    font-size: 1.5rem;
-    color: var(--text);
-    margin-bottom: 1rem;
+    font-size: 2.8rem;
+    line-height: 1;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
 
-.stat-number {
-    font-size: 3rem;
-    font-weight: 700;
+.admin-page-header p,
+.section-header-left p,
+.form-heading p,
+.stat-note {
+    color: #6b7280;
+    line-height: 1.6;
+}
+
+.admin-eyebrow,
+.stat-label {
+    display: inline-flex;
     color: var(--primary);
     font-family: "Oswald", sans-serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.admin-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0.75rem;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: minmax(280px, 0.75fr) minmax(420px, 1.25fr);
+    gap: 1rem;
+    align-items: stretch;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+.stat-card {
+    background: var(--light);
+    padding: 1.4rem;
+    border: 1px solid #ece3df;
+    border-radius: 8px;
+    box-shadow: 0 10px 28px rgba(30,30,30,0.06);
+    transition: all 0.3s ease;
+    border-left: 5px solid var(--primary);
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 36px rgba(30,30,30,0.09);
+}
+
+.stat-number {
+    margin: 0.55rem 0 0.2rem;
+    font-size: 3.2rem;
+    font-weight: 700;
+    color: var(--dark);
+    font-family: "Oswald", sans-serif;
+    line-height: 1;
+}
+
+.statistics-card {
+    min-height: 340px;
+    background: var(--light);
+    border: 1px solid #ece3df;
+    border-radius: 8px;
+    box-shadow: 0 10px 28px rgba(30,30,30,0.06);
+    padding: 1.4rem;
+}
+
+.panel-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.panel-heading h2,
+.form-heading h3 {
+    margin: 0.25rem 0 0;
+    color: var(--dark);
+    font-family: "Oswald", sans-serif;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.panel-link {
+    color: var(--primary);
+    font-family: "Oswald", sans-serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.chart-wrap {
+    height: 260px;
+    position: relative;
 }
 
 .btn-card-action {
-    margin-top: 1rem;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     background: transparent;
     color: var(--primary);
-    border: 2px solid var(--primary);
-    padding: 0.75rem 1.1rem;
-    border-radius: 999px;
+    border: 1px solid rgba(196, 69, 54, 0.55);
+    padding: 0.72rem 1rem;
+    border-radius: 8px;
     font-family: "Oswald", sans-serif;
     text-transform: uppercase;
     letter-spacing: 0.08em;
@@ -96,6 +167,33 @@ body {
     color: var(--light);
 }
 
+.btn-primary-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--primary);
+    color: var(--light);
+    border: 1px solid var(--primary);
+    padding: 0.72rem 1rem;
+    border-radius: 8px;
+    font-family: "Oswald", sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+}
+
+.btn-primary-action:hover {
+    background: var(--dark);
+    border-color: var(--dark);
+}
+
+.management-grid {
+    display: grid;
+    grid-template-columns: minmax(260px, 0.75fr) minmax(420px, 1.25fr);
+    gap: 1rem;
+    align-items: start;
+}
+
 .list-page-section {
     padding: 5rem 7%;
 }
@@ -104,7 +202,7 @@ body {
     max-width: 1100px;
     margin: 0 auto;
     background: var(--light);
-    border-radius: 16px;
+    border-radius: 8px;
     box-shadow: 0 15px 40px rgba(0,0,0,0.08);
     overflow: hidden;
 }
@@ -152,16 +250,26 @@ body {
 
 /* Form Styles */
 .form-container {
-    max-width: 600px;
-    margin: 0 auto;
+    width: 100%;
     background: var(--light);
-    padding: 3rem;
-    border-radius: 12px;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+    padding: 1.4rem;
+    border: 1px solid #ece3df;
+    border-radius: 8px;
+    box-shadow: 0 10px 28px rgba(30,30,30,0.06);
+}
+
+.form-container-wide {
+    min-width: 0;
+}
+
+.form-heading {
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #f0e5e1;
 }
 
 .form-group {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     text-align: left;
 }
 
@@ -173,18 +281,18 @@ body {
     font-size: 0.95rem;
 }
 
-.form-container input, .form-container textarea {
+.form-container input, .form-container textarea, .form-container select {
     width: 100%;
-    padding: 1rem;
-    border: 2px solid #e2e8f0;
+    padding: 0.9rem 0.95rem;
+    border: 1px solid #e2e8f0;
     border-radius: 8px;
     font-family: "Lato", sans-serif;
-    font-size: 1rem;
+    font-size: 0.98rem;
     transition: all 0.3s ease;
     background-color: #f8fafc;
 }
 
-.form-container input:focus, .form-container textarea:focus {
+.form-container input:focus, .form-container textarea:focus, .form-container select:focus {
     outline: none;
     border-color: var(--primary);
     background-color: var(--light);
@@ -192,14 +300,14 @@ body {
 }
 
 .form-container textarea {
-    height: 120px;
+    min-height: 110px;
     resize: vertical;
 }
 
 .upload-area {
-    min-height: 240px;
+    min-height: 210px;
     border: 2px dashed rgba(196, 69, 54, 0.35);
-    border-radius: 14px;
+    border-radius: 8px;
     background: linear-gradient(180deg, #fffaf8 0%, #fff 100%);
     display: flex;
     align-items: center;
@@ -261,10 +369,10 @@ body {
 
 .image-preview img {
     width: 100%;
-    max-height: 280px;
+    max-height: 240px;
     object-fit: cover;
     display: block;
-    border-radius: 10px;
+    border-radius: 8px;
     box-shadow: 0 16px 32px rgba(0,0,0,0.12);
 }
 
@@ -304,8 +412,8 @@ body {
     background: var(--primary);
     color: var(--light);
     border: none;
-    font-size: 1.1rem;
-    padding: 1rem;
+    font-size: 1rem;
+    padding: 0.95rem 1rem;
     border-radius: 8px;
     cursor: pointer;
     font-family: "Oswald", sans-serif;
@@ -320,12 +428,56 @@ body {
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
+@media (max-width: 1024px) {
+    .admin-page-header,
+    .section-header-left {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .admin-actions {
+        justify-content: flex-start;
+    }
+
+    .dashboard-grid,
+    .management-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
 @media (max-width: 768px) {
+    .dashboard-section, .add-product-section {
+        padding: 2rem 5%;
+    }
+
+    .admin-page-header h1,
+    .section-header-left h2 {
+        font-size: 2.2rem;
+    }
+
     .stats-grid {
         grid-template-columns: 1fr;
     }
+
+    .admin-actions {
+        width: 100%;
+    }
+
+    .admin-actions .btn {
+        width: 100%;
+    }
+
     .form-container {
-        padding: 2rem;
+        padding: 1rem;
+    }
+
+    .statistics-card,
+    .stat-card {
+        padding: 1rem;
     }
 
     .upload-area {

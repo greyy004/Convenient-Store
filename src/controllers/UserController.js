@@ -1,6 +1,6 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { ProductCount, getAllProducts} from '../models/productModel.js';
+import { getAllProducts} from '../models/productModel.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -11,17 +11,6 @@ export const getUserDash = (req, res) => {
     );
 };
 
-
-export const getProductCount = async (req, res)=>{
-    try{
-        const productCount = await ProductCount();
-        return res.status(200).json({
-            productCount});
-    }catch(err)
-    {
-        res.status(500).json({message: 'error getting the product'});
-    }
-};
 
 export const getAllProductsByUser = async (req, res)=>{
     try{
