@@ -6,9 +6,13 @@ export const addProduct = async (req, res)=>{
         category_id,
         description,
         price,
-        stock,
-        product_img_url
+        stock
     } = req.body || {};
+
+    let product_img_url = null;
+    if (req.file) {
+        product_img_url = `/uploads/${req.file.filename}`;
+    }
 
     if (!product_name || price === undefined || stock === undefined) {
         return res.status(400).json({

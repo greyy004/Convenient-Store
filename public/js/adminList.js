@@ -45,7 +45,7 @@ function renderProductsTable(products) {
             <td>${escapeHtml(product.product_name)}</td>
             <td>${escapeHtml(product.category_name || '-')}</td>
             <td>${escapeHtml(product.description || '-')}</td>
-            <td>$${escapeHtml(product.price)}</td>
+            <td>Rs.${escapeHtml(product.price)}</td>
             <td>${escapeHtml(product.stock)}</td>
         </tr>
     `).join('');

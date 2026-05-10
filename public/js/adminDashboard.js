@@ -1,4 +1,3 @@
-let selectedProductImage = '';
 let categories = [];
 
 function escapeHtml(value) {
@@ -165,7 +164,7 @@ function setupIconPreview() {
         const reader = new FileReader();
         reader.onload = (event) => {
             previewImg.src = event.target.result;
-            selectedProductImage = event.target.result;
+            // removed
             previewDiv.style.display = 'block';
             placeholder.style.display = 'none';
         };
@@ -244,23 +243,25 @@ document.addEventListener("DOMContentLoaded", () => {
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            const payload = {
-                product_name: form.product_name.value.trim(),
-                category_id: form.category_id.value || null,
-                description: form.description.value.trim(),
-                price: form.price.value,
-                stock: form.stock.value,
-                product_img_url: selectedProductImage
-            };
+            const formData = new FormData();
+            formData.append('product_name', form.product_name.value.trim());
+            if (form.category_id.value) {
+                formData.append('category_id', form.category_id.value);
+            }
+            formData.append('description', form.description.value.trim());
+            formData.append('price', form.price.value);
+            formData.append('stock', form.stock.value);
+
+            const fileInput = document.getElementById('avatarInput');
+            if (fileInput && fileInput.files.length > 0) {
+                formData.append('product_img_url', fileInput.files[0]);
+            }
 
             try {
                 const res = await fetch('/products/addProduct', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
                     credentials: 'include',
-                    body: JSON.stringify(payload)
+                    body: formData
                 });
 
                 const result = await res.json();
@@ -270,7 +271,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 showNotification(result.message, 'success');
 
                 form.reset();
-                selectedProductImage = '';
+                // removed
                 const previewDiv = document.getElementById('imagePreview');
                 const previewImg = previewDiv?.querySelector('img');
                 const placeholder = document.querySelector('#uploadArea .upload-placeholder');

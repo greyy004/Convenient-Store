@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { getUserByEmail } from '../models/userModel.js';
+import { productDetails } from '../models/productModel.js';
 
 export const maxAge = 3 * 24 * 60 * 60; // 3 days
 
@@ -78,4 +79,30 @@ export const requireAdmin = (req, res, next) => {
         return res.status(403).json({ message: "Admin only" });
     }
     next();
+};
+
+//Validating product
+export const validateProduct =async (req, res, next)=>{
+    //if the id is legit or not
+    //if the price is correct or not
+    //if the item is in the inventory
+
+    const { productId, productName}= req.body;
+    try {
+        //check in inventory
+        const productResult = await productDetails(productId);
+        console.log(productResult);
+        const currentStock = productResult.stock;
+        console.log("product in stock:", currentStock);
+        if(currentStock == 0)
+        {
+            return res.status(400).json({message: "item is not in the stock"});
+        }
+
+        next();
+    }
+    catch(err)
+    {
+        console.log("error from middleware.js : function validateProduct =", err);
+}
 };

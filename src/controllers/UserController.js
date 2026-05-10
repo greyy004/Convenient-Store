@@ -23,3 +23,8 @@ export const getAllProductsByUser = async (req, res)=>{
         res.status(500).json({message: 'error getting the products'});
     }
 };
+
+
+export const addToCart = async (req, res)=>{
+//add to cart logic here
+};
