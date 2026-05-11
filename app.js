@@ -12,6 +12,7 @@ import {requireAdmin, requireAuth} from './src/middlewares/middleware.js'
 import cookieParser from 'cookie-parser';
 
 dotenv.config();
+
 const PORT = process.env.PORT || 5000;
 const app = express();
 

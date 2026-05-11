@@ -93,9 +93,17 @@ function renderProducts() {
                     </div>
                     <h3>${escapeHtml(product.product_name)}</h3>
                     <p class="shop-description">${escapeHtml(product.description || "No description available.")}</p>
+                    <div class="shop-price-container">
+                        <span class="shop-price-label">Price</span>
+                        <strong class="shop-price-value">Rs. ${formatPrice(product.price)}</strong>
+                    </div>
                     <div class="shop-card-footer">
-                        <strong class="shop-price">Rs. ${formatPrice(product.price)}</strong>
-                        <button class="shop-add-btn" type="button" data-product-name="${escapeHtml(product.product_name)}">Add to Cart</button>
+                        <div class="shop-quantity-control">
+                            <button class="shop-qty-btn minus" type="button">−</button>
+                            <input type="number" class="shop-qty-input" value="1" min="1" max="${product.stock}" readonly>
+                            <button class="shop-qty-btn plus" type="button">+</button>
+                        </div>
+                        <button class="shop-add-btn" type="button" data-product-id="${escapeHtml(product.id)}">Add to Cart</button>
                     </div>
                 </div>
             </article>
@@ -105,27 +113,56 @@ function renderProducts() {
 
   productContainer.innerHTML = `<div class="shop-products-grid">${cards}</div>`;
 
+  // Add event listeners for quantity buttons
+  productContainer.querySelectorAll(".shop-product-card").forEach((card) => {
+    const minusBtn = card.querySelector(".shop-qty-btn.minus");
+    const plusBtn = card.querySelector(".shop-qty-btn.plus");
+    const qtyInput = card.querySelector(".shop-qty-input");
+    const maxStock = parseInt(qtyInput.getAttribute("max"));
+
+    minusBtn?.addEventListener("click", () => {
+      const currentQty = parseInt(qtyInput.value);
+      if (currentQty > 1) {
+        qtyInput.value = currentQty - 1;
+      }
+    });
+
+    plusBtn?.addEventListener("click", () => {
+      const currentQty = parseInt(qtyInput.value);
+      if (currentQty < maxStock) {
+        qtyInput.value = currentQty + 1;
+      }
+    });
+  });
+
   productContainer.querySelectorAll(".shop-add-btn").forEach((button) => {
-    button.addEventListener("click", async (product) => {
+    button.addEventListener("click", async () => {
       try {
-        //add product logic;
-        const res = await fetch('/user/addToCart',{
-            method: 'POST',
-            headers:{
-                'Content-type': 'application/json'
-            },
-            credentials: 'include',
-            body: JSON.stringify({
-               productId: 1
-            })
+        const productId = button.dataset.productId;
+        const card = button.closest(".shop-product-card");
+        const quantity = parseInt(card.querySelector(".shop-qty-input").value);
+
+        const res = await fetch("/user/addToCart", {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({
+            productId,
+            quantity,
+          }),
         });
-            const data = await res.json();
-            if(data==OK)
-            {
-                alert("item added to the cart ");
-            }
+
+        const data = await res.json();
+        if (res.ok) {
+          showNotification("Item added to the cart", "success");
+        } else {
+          showNotification(data.message || "Error adding item", "error");
+        }
       } catch (err) {
-        console.log("error adding item to the cart");
+        console.error("error adding item to the cart:", err);
+        showNotification("Error adding item to the cart", "error");
       }
     });
   });

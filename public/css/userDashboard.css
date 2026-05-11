@@ -123,6 +123,31 @@ body {
     background-size: cover;
 }
 
+.shop-price-container {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 1.25rem;
+    padding: 0.75rem 0;
+    border-top: 1px solid #f1f5f9;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.shop-price-label {
+    color: #64748b;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.shop-price-value {
+    color: var(--dark);
+    font-family: "Oswald", sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
 .shop-product-body {
     display: flex;
     flex: 1;
@@ -184,22 +209,22 @@ body {
 }
 
 .shop-price {
-    color: var(--dark);
-    font-family: "Oswald", sans-serif;
-    font-size: 1.35rem;
+    display: none;
 }
 
 .shop-add-btn {
-    flex: 0 0 auto;
-    padding: 0.75rem 0.95rem;
+    flex: 1;
+    padding: 0.75rem 1.25rem;
     background: var(--primary);
     color: var(--light);
     border: 0;
     border-radius: 8px;
     cursor: pointer;
     font-family: "Oswald", sans-serif;
+    font-size: 1rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
+    transition: background 0.2s;
 }
 
 .shop-add-btn:hover {
@@ -246,4 +271,50 @@ body {
         align-items: stretch;
         flex-direction: column;
     }
+}
+
+.shop-quantity-control {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 2px;
+}
+
+.shop-qty-btn {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: white;
+    color: var(--dark);
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.2s;
+}
+
+.shop-qty-btn:hover {
+    background: var(--primary);
+    color: white;
+}
+
+.shop-qty-input {
+    width: 35px;
+    text-align: center;
+    border: none;
+    background: transparent;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--dark);
+}
+
+.shop-qty-input::-webkit-inner-spin-button,
+.shop-qty-input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }

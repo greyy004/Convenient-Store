@@ -56,7 +56,7 @@ export const validateLogin = (req, res, next) => {
         return res.status(400).json({ message: "Please provide a valid email address" });
     }
 
-    next(); 
+    next();
 };
 
 // JWT protection
@@ -81,28 +81,31 @@ export const requireAdmin = (req, res, next) => {
     next();
 };
 
-//Validating product
-export const validateProduct =async (req, res, next)=>{
-    //if the id is legit or not
-    //if the price is correct or not
-    //if the item is in the inventory
-
-    const { productId, productName}= req.body;
+export const validateProduct = async (req, res, next) => {
+    const { productId } = req.body;
     try {
-        //check in inventory
+        if (!productId) {
+            return res.status(400).json({ message: "Product ID is required" });
+        }
+
+        const parseId = Number(productId);
+        if (isNaN(parseId) || !Number.isInteger(parseId) || parseId <= 0) {
+            return res.status(400).json({ message: "Invalid product ID format" });
+        }
+
         const productResult = await productDetails(productId);
-        console.log(productResult);
-        const currentStock = productResult.stock;
-        console.log("product in stock:", currentStock);
-        if(currentStock == 0)
-        {
-            return res.status(400).json({message: "item is not in the stock"});
+        if (!productResult) {
+            return res.status(404).json({ message: "Product not found" });
+        }
+
+        if (productResult.stock <= 0) {
+            return res.status(400).json({ message: "Item is out of stock" });
         }
 
         next();
     }
-    catch(err)
-    {
-        console.log("error from middleware.js : function validateProduct =", err);
-}
+    catch (err) {
+        console.error("Error in validateProduct middleware:", err);
+        return res.status(500).json({ message: "Internal server error during validation" });
+    }
 };

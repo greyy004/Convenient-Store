@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Checkout - JayaStore</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Lato:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/index.css" />
+    <link rel="stylesheet" href="../css/checkout.css" />
+    <link rel="stylesheet" href="../css/notifications.css" />
+  </head>
+
+  <body>
+    <nav class="navbar">
+      <div class="nav-container">
+        <div class="logo">JAYA<span>STORE</span></div>
+        <ul class="nav-menu">
+          <li><a href="/user/dashboard">Shop</a></li>
+          <li><a href="#" onclick="logout()">Logout</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <main class="checkout-page">
+      <div class="container">
+        <div class="checkout-header">
+          <h1>Secure Checkout</h1>
+          <p>Please review your order and provide shipping details.</p>
+        </div>
+
+        <div class="checkout-layout">
+          <!-- Left: Shipping & Payment Form -->
+          <section class="checkout-form-section">
+            <form id="checkoutForm">
+              <div class="form-card">
+                <h3>Shipping Information</h3>
+                <div class="form-grid">
+                  <div class="form-group">
+                    <label for="fullName">Full Name</label>
+                    <input
+                      type="text"
+                      id="fullName"
+                      name="fullName"
+                      required
+                      placeholder="Full Name"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      required
+                      placeholder="Email Address"
+                    />
+                  </div>
+                  <div class="form-group full-width">
+                    <label for="address">Shipping Address</label>
+                    <input
+                      type="text"
+                      id="address"
+                      name="address"
+                      required
+                      placeholder="123 Street, City"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="city">City</label>
+                    <input
+                      type="text"
+                      id="city"
+                      name="city"
+                      required
+                      placeholder="Kathmandu"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input
+                      type="tel"
+                      id="phone"
+                      name="phone"
+                      required
+                      placeholder="98XXXXXXXX"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-card">
+                <h3>Payment Method</h3>
+                <div class="payment-options">
+                  <label class="payment-option">
+                    <input
+                      type="radio"
+                      name="paymentMethod"
+                      value="cod"
+                      checked
+                    />
+                    <div class="payment-option-content">
+                      <span class="payment-name">Cash on Delivery</span>
+                      <span class="payment-desc"
+                        >Pay when you receive your order</span
+                      >
+                    </div>
+                  </label>
+                  <label class="payment-option">
+                    <input
+                      type="radio"
+                      name="paymentMethod"
+                      value="esewa"
+                    />
+                    <div class="payment-option-content">
+                      <span class="payment-name">Esewa</span>
+                      <span class="payment-desc"
+                        >Online payment via Esewa wallet</span
+                      >
+                    </div>
+                  </label>
+                </div>
+              </div>
+
+              <button type="submit" class="place-order-btn">Place Order</button>
+            </form>
+          </section>
+
+          <!-- Right: Order Summary -->
+          <aside class="order-summary-section">
+            <div class="summary-card">
+              <h3>Order Summary</h3>
+              <div id="cartItemsList" class="summary-items">
+                <!-- Items will be loaded here -->
+                <p class="loading-text">Loading your items...</p>
+              </div>
+
+              <div class="summary-totals">
+                <div class="summary-row">
+                  <span>Subtotal</span>
+                  <span id="subtotal">Rs. 0.00</span>
+                </div>
+                <div class="summary-row">
+                  <span>Shipping</span>
+                  <span id="shipping">Rs. 100.00</span>
+                </div>
+                <div class="summary-row total">
+                  <span>Total</span>
+                  <span id="totalAmount">Rs. 0.00</span>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </main>
+    <!-- Hidden form for Esewa payment -->
+    <form
+      id="esewaForm"
+      action="https://rc-epay.esewa.com.np/api/epay/main/v2/form"
+      method="POST"
+      style="display: none"
+    >
+      <input type="text" id="amount" name="amount" required />
+      <input type="text" id="tax_amount" name="tax_amount" value="0" required />
+      <input type="text" id="total_amount" name="total_amount" required />
+      <input
+        type="text"
+        id="transaction_uuid"
+        name="transaction_uuid"
+        required
+      />
+      <input
+        type="text"
+        id="product_code"
+        name="product_code"
+        value="EPAYTEST"
+        required
+      />
+      <input
+        type="text"
+        id="product_service_charge"
+        name="product_service_charge"
+        value="0"
+        required
+      />
+      <input
+        type="text"
+        id="product_delivery_charge"
+        name="product_delivery_charge"
+        required
+      />
+      <input
+        type="text"
+        id="success_url"
+        name="success_url"
+        value="https://developer.esewa.com.np/success"
+        required
+      />
+      <input
+        type="text"
+        id="failure_url"
+        name="failure_url"
+        value="https://developer.esewa.com.np/failure"
+        required
+      />
+      <input
+        type="text"
+        id="signed_field_names"
+        name="signed_field_names"
+        value="total_amount,transaction_uuid,product_code"
+        required
+      />
+      <input type="text" id="signature" name="signature" required />
+      <input value="Submit" type="submit" />
+    </form>
+    <footer>
+      <p>&copy; 2026 JayaStore. All Rights Reserved.</p>
+    </footer>
+    <script src="/js/notifications.js"></script>
+    <script src="/js/checkout.js"></script>
+  </body>
+</html>

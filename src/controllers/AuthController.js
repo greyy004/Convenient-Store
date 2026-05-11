@@ -25,6 +25,7 @@ export const login = async (req, res) => {
 
     const token = generateToken({
         id: user.id,
+        username: user.name,
         is_admin: user.is_admin
     });
     res.cookie('jwt', token, {
@@ -34,6 +35,7 @@ export const login = async (req, res) => {
 
     res.json({user: {
         id: user.id,
+        username: user.name,
         is_admin: user.is_admin}
      });
 };
