@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Orders - JayaStore</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Lato:wght@300;400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/userOrderList.css">
+    <link rel="stylesheet" href="../css/notifications.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">JAYA<span>STORE</span></div>
+            <ul class="nav-menu">
+                <li><a href="/user/dashboard">Shop</a></li>
+                <li><a href="/user/orderList" class="active">My Orders</a></li>
+                <li><a href="#" onclick="logout()">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="order-list-page">
+        <div class="container">
+            <div class="order-list-header">
+                <h1>My Order History</h1>
+                <p>Track and view your previous purchases.</p>
+            </div>
+
+            <div id="ordersContainer">
+                <!-- Orders will be loaded here -->
+                <div class="loading-state">
+                    <p>Loading your orders...</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 JayaStore. All Rights Reserved.</p>
+    </footer>
+
+    <script src="/js/notifications.js"></script>
+    <script src="/js/userOrderList.js"></script>
+</body>
+</html>

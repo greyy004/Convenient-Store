@@ -68,7 +68,7 @@ export const addItemToCart = async (userId, productId, quantity = 1) => {
     }
 };
 
-export const getCartItems = async (userId) => {
+export const getCartItemsByUser = async (userId) => {
     const query = `
         SELECT 
             p.id AS product_id,
@@ -106,7 +106,7 @@ export const getCartId = async (userId) => {
     }
 };
 
-export const getCartItemsDb = async (cartId) => {
+export const getCartItems = async (cartId) => {
     try {
     const result = await pool.query(
         `SELECT ci.id, ci.product_id, ci.quantity, p.product_name, p.price

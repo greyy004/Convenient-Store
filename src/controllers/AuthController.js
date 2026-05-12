@@ -3,10 +3,10 @@ import { getUserByEmail, createUser } from '../models/userModel.js';
 import { generateToken, maxAge } from '../middlewares/middleware.js';
 
 export const register = async (req, res) => {
-    const { name, email, password } = req.body;
+    const { name, email, password, address, phone, country } = req.body;
 
     const password_hash = await bcrypt.hash(password, 10);
-    await createUser({ name, email, password_hash });
+    await createUser({ name, email, password_hash, address, phone, country });
     res.status(201).json({ message: "User registered successfully" });
 };
 

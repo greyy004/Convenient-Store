@@ -5,11 +5,12 @@ import {fileURLToPath} from 'url';
 import authRoutes from './src/routes/authRoutes.js';
 import initdb from './src/config/initdb.js';
 import pool from './src/config/db.js';
-import userRoutes from './src/routes/userRoutes.js';
+import userRoutes from './src/routes/userroutes.js';
 import adminRoutes from './src/routes/adminRoutes.js';
-import productRoutes from './src/routes/productRoutes.js';
+import productRoutes from './src/routes/productroutes.js';
 import {requireAdmin, requireAuth} from './src/middlewares/middleware.js'
 import cookieParser from 'cookie-parser';
+import apiRoutes from './src/routes/apiRoutes.js';
 
 dotenv.config();
 
@@ -32,6 +33,8 @@ app.use('/auth', authRoutes);
 app.use('/admin', requireAuth, requireAdmin, adminRoutes);
 app.use('/user', requireAuth, userRoutes);
 app.use('/products', requireAuth, requireAdmin, productRoutes);
+app.use('/api', apiRoutes);
+
 const startServer = async () => {
     try {
         // Initialize the database

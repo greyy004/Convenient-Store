@@ -141,6 +141,7 @@ h2 {
 
 #registerForm input[type="text"],
 #registerForm input[type="email"],
+#registerForm input[type="tel"],
 #registerForm input[type="password"] {
   width: 100%;
   padding: 0.9rem 1rem;
@@ -155,6 +156,7 @@ h2 {
 
 #registerForm input[type="text"]:focus,
 #registerForm input[type="email"]:focus,
+#registerForm input[type="tel"]:focus,
 #registerForm input[type="password"]:focus {
   border-color: var(--primary);
   background: var(--light);

@@ -9,6 +9,9 @@ export const createUserTable = async () => {
                     name VARCHAR(100),
                     email VARCHAR(100) UNIQUE,
                     password VARCHAR(255),
+                    address TEXT,
+                    phone VARCHAR(20),
+                    country VARCHAR(100) DEFAULT 'Nepal',
                     is_admin BOOLEAN DEFAULT FALSE
                 )
             `;
@@ -20,7 +23,7 @@ export const createUserTable = async () => {
 
 export const getUserByEmail = async (email) => {
     const result = await pool.query(
-        `SELECT id, name, email, password, is_admin
+        `SELECT id, name, email, password, address, phone, country, is_admin
          FROM users
          WHERE email = $1`,
         [email]
@@ -28,11 +31,21 @@ export const getUserByEmail = async (email) => {
     return result.rows[0];
 };
 
-export const createUser = async ({ name, email, password_hash }) => {
+export const getUserById = async (id) => {
+    const result = await pool.query(
+        `SELECT id, name, email, address, phone, country, is_admin
+         FROM users
+         WHERE id = $1`,
+        [id]
+    );
+    return result.rows[0];
+};
+
+export const createUser = async ({ name, email, password_hash, address, phone, country }) => {
     await pool.query(
-        `INSERT INTO users (name, email, password)
-         VALUES ($1, $2, $3)`,
-        [name, email, password_hash]
+        `INSERT INTO users (name, email, password, address, phone, country)
+         VALUES ($1, $2, $3, $4, $5, $6)`,
+        [name, email, password_hash, address || null, phone || null, country || 'Nepal']
     );
 };
 

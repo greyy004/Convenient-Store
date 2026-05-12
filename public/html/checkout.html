@@ -19,6 +19,7 @@
         <div class="logo">JAYA<span>STORE</span></div>
         <ul class="nav-menu">
           <li><a href="/user/dashboard">Shop</a></li>
+          <li><a href="/user/orderList">My Orders</a></li>
           <li><a href="#" onclick="logout()">Logout</a></li>
         </ul>
       </div>
@@ -69,13 +70,13 @@
                     />
                   </div>
                   <div class="form-group">
-                    <label for="city">City</label>
+                    <label for="country">Country</label>
                     <input
                       type="text"
-                      id="city"
-                      name="city"
+                      id="country"
+                      name="country"
                       required
-                      placeholder="Kathmandu"
+                      placeholder="Nepal"
                     />
                   </div>
                   <div class="form-group">
@@ -196,14 +197,14 @@
         type="text"
         id="success_url"
         name="success_url"
-        value="https://developer.esewa.com.np/success"
+        value="http://localhost:5000/api/payment/success"
         required
       />
       <input
         type="text"
         id="failure_url"
         name="failure_url"
-        value="https://developer.esewa.com.np/failure"
+        value="http://localhost:5000/api/payment/failure"
         required
       />
       <input

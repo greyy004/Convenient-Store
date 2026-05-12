@@ -4,11 +4,14 @@ document.getElementById('registerForm').addEventListener('submit', async (e) => 
     const name = document.getElementById('name').value.trim();
     const email = document.getElementById('email').value.trim();
     const password = document.getElementById('password').value.trim();
+    const address = document.getElementById('address').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const country = document.getElementById('country').value.trim();
     const confirmPassword = document.getElementById('confirmPassword').value.trim();
     const terms = document.getElementById('terms').checked;
 
     // --- Validation ---
-    if (!name || !email || !password || !confirmPassword) {
+    if (!name || !email || !password || !address || !phone || !country || !confirmPassword) {
         showNotification('Please fill in all fields', 'warning');
         return;
     }
@@ -43,7 +46,7 @@ document.getElementById('registerForm').addEventListener('submit', async (e) => 
         const response = await fetch('/auth/register', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name, email, password, confirmPassword })
+            body: JSON.stringify({ name, email, password, address, phone, country, confirmPassword })
         });
 
         const data = await response.json(); // parse JSON first

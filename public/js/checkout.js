@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", async () => {
   await loadCartSummary();
+  await prefillUserData();
 
   const checkoutForm = document.getElementById("checkoutForm");
 
@@ -68,6 +69,34 @@ async function loadCartSummary() {
   }
 }
 
+// PRE-FILL USER DATA
+async function prefillUserData() {
+  try {
+    const response = await fetch("/user/profile", {
+      method: "GET",
+      credentials: "include",
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      const user = data.user;
+
+      if (user) {
+        document.getElementById("fullName").value = user.name || "";
+        document.getElementById("email").value = user.email || "";
+
+        // Use saved data or dummy values if empty
+        document.getElementById("address").value =
+          user.address || "Kathmandu, Nepal (Dummy)";
+        document.getElementById("phone").value = user.phone || "9800000000";
+        document.getElementById("country").value = user.country || "Nepal";
+      }
+    }
+  } catch (err) {
+    console.error("Error pre-filling user data:", err);
+  }
+}
+
 // UPDATE TOTALS
 function updateTotals(subtotal, shipping) {
   document.getElementById("subtotal").textContent =
@@ -92,7 +121,7 @@ async function handleCheckout(e) {
 
     address: document.getElementById("address").value,
 
-    city: document.getElementById("city").value,
+    country: document.getElementById("country").value,
 
     phone: document.getElementById("phone").value,
   };
@@ -124,7 +153,7 @@ async function handleCheckout(e) {
       showNotification("Order placed successfully!", "success");
 
       setTimeout(() => {
-        window.location.href = "/user/dashboard";
+        window.location.href = "/user/orderList";
       }, 2000);
 
       return;
@@ -160,6 +189,12 @@ async function handleCheckout(e) {
       document.getElementById("transaction_uuid").value = data.transaction_uuid;
 
       document.getElementById("signature").value = data.signature;
+      document.getElementById("product_delivery_charge").value = 100;
+      document.getElementById("product_service_charge").value = 0;
+      document.getElementById("success_url").value =
+        `${window.location.origin}/api/payment/success`;
+      document.getElementById("failure_url").value =
+        `${window.location.origin}/api/payment/failure`;
 
       // Submit to eSewa
       document.getElementById("esewaForm").submit();
