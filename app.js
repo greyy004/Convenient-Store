@@ -8,7 +8,7 @@ import pool from './src/config/db.js';
 import userRoutes from './src/routes/userroutes.js';
 import adminRoutes from './src/routes/adminRoutes.js';
 import productRoutes from './src/routes/productroutes.js';
-import {requireAdmin, requireAuth} from './src/middlewares/middleware.js'
+import {adminOnly, requireAuth, userOnly} from './src/middlewares/middleware.js'
 import cookieParser from 'cookie-parser';
 import apiRoutes from './src/routes/apiRoutes.js';
 
@@ -30,9 +30,9 @@ app.get('/',(req,res)=>{
 });
 
 app.use('/auth', authRoutes);
-app.use('/admin', requireAuth, requireAdmin, adminRoutes);
-app.use('/user', requireAuth, userRoutes);
-app.use('/products', requireAuth, requireAdmin, productRoutes);
+app.use('/admin', requireAuth, adminOnly, adminRoutes);
+app.use('/user', requireAuth, userOnly, userRoutes);
+app.use('/products', requireAuth, adminOnly, productRoutes);
 app.use('/api', apiRoutes);
 
 const startServer = async () => {

@@ -13,7 +13,6 @@ import {
 
 export const esewaPaymentController = async (req, res) => {
   const userId = req.user.id;
-
   try {
     const cartId = await getCartId(userId);
 

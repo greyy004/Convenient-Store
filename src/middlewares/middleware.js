@@ -85,11 +85,33 @@ export const requireAuth = (req, res, next) => {
   }
 };
 
-// Admin guard
-export const requireAdmin = (req, res, next) => {
-  if (!req.user.is_admin) {
+// Admin-only route guard. Must run after requireAuth.
+export const adminOnly = (req, res, next) => {
+  if (!req.user?.is_admin) {
     return res.status(403).json({ message: "Admin only" });
   }
+  next();
+};
+
+// User-only route guard. Must run after requireAuth.
+export const userOnly = (req, res, next) => {
+  if (req.user?.is_admin) {
+    return res.status(403).json({ message: "User only" });
+  }
+  next();
+};
+
+export const validateOwnUser = (req, res, next) => {
+  const requestedUserId = req.params.userId ?? req.params.id ?? req.body.userId;
+
+  if (!requestedUserId) {
+    return res.status(400).json({ message: "User ID is required" });
+  }
+
+  if (Number(requestedUserId) !== Number(req.user?.id)) {
+    return res.status(403).json({ message: "You can only access your own data" });
+  }
+
   next();
 };
 

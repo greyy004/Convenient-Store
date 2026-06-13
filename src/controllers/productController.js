@@ -13,7 +13,6 @@ export const addProduct = async (req, res)=>{
     if (req.file) {
         product_img_url = `/uploads/${req.file.filename}`;
     }
-
     if (!product_name || price === undefined || stock === undefined) {
         return res.status(400).json({
             message: 'Product name, price, and stock are required'

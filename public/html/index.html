@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JayaStore - Chocolates & Convenience</title>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/notifications.css">
     <link rel="stylesheet" href="../css/index.css">
 </head>
 <body>
@@ -46,33 +47,12 @@
             <h2 class="section-title">Our Products</h2>
             <p class="section-subtitle">Everything you love, all in one place</p>
             
-            <div class="products-grid">
-                <div class="product-card">
-                    <div class="product-icon" style="background-image: url('https://images.unsplash.com/photo-1481391319762-47dff72954d9?w=600&h=400&fit=crop');"></div>
-                    <h3>Chocolates</h3>
-                    <p>Premium chocolate bars, truffles, and artisan confections from top brands worldwide.</p>
-                    <button>View</button>
-                </div>
-                
-                <div class="product-card">
-                    <div class="product-icon" style="background-image: url('https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=600&h=400&fit=crop');"></div>
-                    <h3>Snacks</h3>
-                    <p>Chips, cookies, candy, nuts, and more. Perfect for any occasion or craving.</p>
-                    <button>View</button>
-                </div>
-                
-                <div class="product-card">
-                    <div class="product-icon" style="background-image: url('https://images.unsplash.com/photo-1437418747212-8d9709afab22?w=600&h=400&fit=crop');"></div>
-                    <h3>Drinks</h3>
-                    <p>Sodas, energy drinks, juices, water, and specialty beverages to keep you refreshed.</p>
-                    <button>View</button>
-                </div>
-                
-                <div class="product-card">
-                    <div class="product-icon" style="background-image: url('https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&h=400&fit=crop');"></div>
-                    <h3>Essentials</h3>
-                    <p>Daily necessities including toiletries, household items, and convenience products.</p>
-                    <button>View</button>
+            <div class="products-grid" id="featuredProducts">
+                <div class="product-card product-card-loading">
+                    <div class="product-icon"></div>
+                    <h3>Loading</h3>
+                    <p>Fetching featured products from the store.</p>
+                    <button type="button">View</button>
                 </div>
             </div>
         </div>
@@ -90,5 +70,7 @@
     <footer>
         <p>&copy; 2026 JayaStore. All Rights Reserved.</p>
     </footer>
+    <script src="/js/notifications.js"></script>
+    <script src="/js/index.js"></script>
 </body>
 </html>

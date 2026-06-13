@@ -2,7 +2,6 @@ import express from 'express';
 import {getAdminDash,getUserCount, getProductCount, getUsers, getProducts, getUsersPage, getProductsPage, getSalesData} from '../controllers/adminController.js';
 
 const router = express.Router();
-
 router.get('/dashboard', getAdminDash);
 router.get('/users-page', getUsersPage);
 router.get('/products-page', getProductsPage);

@@ -104,6 +104,33 @@ export const getAllProducts = async () => {
   return result.rows;
 };
 
+export const getFeaturedProducts = async (limit = 4) => {
+  const result = await pool.query(
+    `
+      SELECT *
+      FROM (
+        SELECT DISTINCT ON (COALESCE(p.category_id, 0))
+            p.id,
+            p.product_name,
+            p.category_id,
+            c.name AS category_name,
+            p.description,
+            p.price,
+            p.stock,
+            p.product_img_url
+        FROM products p
+        LEFT JOIN categories c ON p.category_id = c.id
+        WHERE p.stock > 0
+        ORDER BY COALESCE(p.category_id, 0), p.id DESC
+      ) featured
+      ORDER BY id DESC
+      LIMIT $1
+    `,
+    [limit],
+  );
+  return result.rows;
+};
+
 export const productDetails = async (productId) => {
   const result = await pool.query(`Select * from products where id = $1`, [
     productId,

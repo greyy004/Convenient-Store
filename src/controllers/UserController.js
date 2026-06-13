@@ -11,7 +11,6 @@ const __dirname = path.dirname(__filename);
 export const getUserDash = (req, res) => {
   res.sendFile(path.join(__dirname, "../../public/html/userDashboard.html"));
 };
-
 export const getCheckout = (req, res) => {
   res.sendFile(path.join(__dirname, "../../public/html/checkout.html"));
 };
